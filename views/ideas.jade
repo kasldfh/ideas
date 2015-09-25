@@ -1,0 +1,16 @@
+//- an idea is to have a short text field then a button to extend for longer
+//- text
+extends layout 
+block content
+  div(class="container")
+    form(name="idea-entry", method="post", class="form-inline")
+      div(class="form-group") 
+        label(for="short") Idea&nbsp&nbsp
+        input(type="text", class="form-control", id="short", placeholder="Short")
+      div(class="form-group") 
+        label(for="long") Idea&nbsp&nbsp
+        input(type="text", class="form-control", id="long", placeholder="Long")
+      div(class="form-group") 
+        button(type="submit", class="btn btn-default").
+          Save
+

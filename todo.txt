@@ -1,0 +1,4 @@
+hijack tab so when they hit it the long ideas thing comes up
+automatically bring up long ideas after text reaches a certain length (that
+might be annoying?)
+send the 
