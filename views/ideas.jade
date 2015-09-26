@@ -2,15 +2,22 @@
 //- text
 extends layout 
 block content
+  - console.log(user)
   div(class="container")
-    form(name="idea-entry", method="post", class="form-inline")
+    h1. 
+      Hello  #{user.username}
+    form(name="idea-entry",method="post",class="form-inline",action="/addidea")
       div(class="form-group") 
         label(for="short") Idea&nbsp&nbsp
-        input(type="text", class="form-control", id="short", placeholder="Short")
+        input(type="text", class="form-control", name="short", placeholder="Short")
       div(class="form-group") 
         label(for="long") Idea&nbsp&nbsp
-        input(type="text", class="form-control", id="long", placeholder="Long")
+        input(type="text", class="form-control", name="long", placeholder="Long")
       div(class="form-group") 
         button(type="submit", class="btn btn-default").
           Save
-
+    h1.
+      Ideas
+    ul
+      each idea, i in ideas
+        li= idea.short

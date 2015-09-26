@@ -1,64 +1,88 @@
 var express = require('express');
+var passport = require('passport');
+var Account = require('../models/account');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-/*GET hello world page*/
-router.get('/helloworld', function(req, res){
-    res.render('helloworld', {title: 'Hello, World!' });
-});
-
-/* GET Userlist page */
-router.get('/userlist', function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
+router.get('/', function (req, res) {
+        res.render('index', { user : req.user });
         });
+
+router.get('/register', function(req, res) {
+        res.render('register', { });
+        });
+
+router.post('/register', function(req, res) {
+        Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+                if (err) {
+                return res.render('register', { account : account });
+                }
+        passport.authenticate('local')(req, res, function () {
+                res.redirect('/');
+                });
+
+            });
     });
+    
+
+router.get('/login', function(req, res) {
+        res.render('login', { user : req.user });
+        });
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+        res.redirect('/');
+        });
+
+router.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
+        });
+
+router.get('/ping', function(req, res){
+        res.status(200).send("pong!");
+        });
+
+
+/* POST to Add Idea */
+router.post('/addidea', function(req, res) {
+
+        // Set our internal DB variable
+        var db = req.db;
+
+        // Get our form values. These rely on the "name" attributes
+        var short = req.body.short;
+        var long = req.body.long;
+        var username = req.user.username;
+        console.log(req.user.username);
+
+        // Set our collection
+        var collection = db.get('ideas');
+
+        // Submit to the DB
+        collection.insert({
+                "username" : username,
+                "short" : short,
+                "long" : long
+                }, function (err, doc) {
+                if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+                }
+                else {
+                // And forward to success page
+                res.redirect("ideas");
+                }
+                });
 });
 
-/* GET New User page. */
-router.get('/newuser', function(req, res) {
-    res.render('newuser', { title: 'Add New User' });
-});
-
-/* POST to Add User Service */
-router.post('/adduser', function(req, res) {
-
-    // Set our internal DB variable
-    var db = req.db;
-
-    // Get our form values. These rely on the "name" attributes
-    var userName = req.body.username;
-    var userEmail = req.body.useremail;
-
-    // Set our collection
-    var collection = db.get('usercollection');
-
-    // Submit to the DB
-    collection.insert({
-        "username" : userName,
-        "email" : userEmail
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            // And forward to success page
-            res.redirect("userlist");
-        }
-    });
-});
-
+//TODO: if someone isn't logged in, redirect to login or home page
 /*GET thoughts page */
 router.get('/ideas', function(req, res) {
-    res.render('ideas', {title: 'Thoughts'});
-});
+        var db = req.db;
+        var collection = db.get('ideas');
+        collection.find({username : req.user.username},{},function(e,docs){
+                res.render('ideas', {"user" : req.user, "ideas" : docs}
+                        );
+                });
+        });
 
 module.exports = router;
