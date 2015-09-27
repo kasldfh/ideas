@@ -29,7 +29,7 @@ router.get('/login', function(req, res) {
         });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-        res.redirect('/');
+        res.redirect('/ideas');
         });
 
 router.get('/logout', function(req, res) {
@@ -53,6 +53,7 @@ router.post('/addidea', function(req, res) {
         var long = req.body.long;
         var username = req.user.username;
         console.log(req.user.username);
+        console.log(short);
 
         // Set our collection
         var collection = db.get('ideas');
@@ -69,10 +70,24 @@ router.post('/addidea', function(req, res) {
                 }
                 else {
                 // And forward to success page
-                res.redirect("ideas");
+                res.redirect("/ideas");
                 }
                 });
 });
+
+/* GET to remove idea*/
+router.post('/deleteidea', function(req, res) {
+    var db = req.db;
+    var ObjectID = require('mongodb').ObjectID;
+    var id = req.body.id.toString();
+    //var id = new ObjectID(req.id); 
+    var collection = db.get('ideas');
+    collection.remove({"_id": id }, function (err, docs) {
+        if(err) return err;
+        }); 
+    res.redirect("/ideas");
+});
+
 
 //TODO: if someone isn't logged in, redirect to login or home page
 /*GET thoughts page */
@@ -80,6 +95,7 @@ router.get('/ideas', function(req, res) {
         var db = req.db;
         var collection = db.get('ideas');
         collection.find({username : req.user.username},{},function(e,docs){
+                console.log(docs);
                 res.render('ideas', {"user" : req.user, "ideas" : docs}
                         );
                 });

@@ -1,23 +1,73 @@
 //- an idea is to have a short text field then a button to extend for longer
 //- text
+    //-form(name="idea-entry",method="post",class="form-inline",action="/addidea",
+    //-    style="margin-bottom: 0px;")
+    //-  table(class="table table-condensed", style="margin-bottom: 0px;")
+    //-    thead
+    //-      tr
+    //-        th
+    //-          !{"Short"}
+    //-        th
+    //-          !{"Full"}
+    //-        th
+    //-        th
+    //-    tbody
+    //-        tr
+    //-          td
+    //-            div(class="form-group") 
+    //-              input(type="text", class="form-control", name="short",
+    //-                  placeholder="Short", size=10)
+    //-          td
+    //-            div(class="form-group")
+    //-                input(type="text", class="form-control", name="long",
+    //-                    placeholder="Long", size=50)
+    //-          td
+    //-            div(class="form-group") 
+    //-              button(type="submit", class="btn btn-default").
+    //-                Save
+
+
+    //-table(class="table table-condensed", style="margin-top: 0px;")
+    //-  tbody
+    //-    each idea, i in ideas
+    //-      tr
+    //-        td
+    //-          h4
+    //-            !{idea.short}
+    //-        td
+    //-          !{idea.long}
+    //-        td
+    //-          form(method="post", class="form", action="/deleteidea")
+    //-            input(type="hidden", name="id", value=idea._id)
+    //-            button(type="submit", class="btn btn-danger").
+    //-              Delete
+    //-        td
+    //-          a(href="/editidea/"+idea.id, class="btn btn-primary").
+    //-            Edit
+
+      
+        //-li= idea.short
+
 extends layout 
 block content
   - console.log(user)
   div(class="container")
-    h1. 
-      Hello  #{user.username}
-    form(name="idea-entry",method="post",class="form-inline",action="/addidea")
-      div(class="form-group") 
-        label(for="short") Idea&nbsp&nbsp
-        input(type="text", class="form-control", name="short", placeholder="Short")
-      div(class="form-group") 
-        label(for="long") Idea&nbsp&nbsp
-        input(type="text", class="form-control", name="long", placeholder="Long")
-      div(class="form-group") 
-        button(type="submit", class="btn btn-default").
-          Save
-    h1.
-      Ideas
-    ul
-      each idea, i in ideas
-        li= idea.short
+    h1(class="text-center"). 
+      #{user.username}'s Ideas
+    div(style="text-align: center;")
+      form(name="idea-entry",method="post",class="form-inline",
+          action="/addidea", style="text-align: center;")
+
+        div(class="form-group col-md-3") 
+          span(style="display: block;") 
+            input(type="text", class="form-control", name="short",
+                placeholder="Short", style="width: 100%;")
+
+        div(class="form-group col-md-4")
+          span(style="display: block;")
+             input(type="text", class="form-control", name="long",
+                 placeholder="Long", style="width: 100%")
+
+         div(class="form-group col-md-1") 
+           button(type="submit", class="btn btn-default").
+             Save

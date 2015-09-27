@@ -1,5 +1,21 @@
 hijack tab so when they hit it the long ideas thing comes up
 automatically bring up long ideas after text reaches a certain length (that
 might be annoying?)
-make a new collection for every user
-working on signin.jade right now
+make it receive sms ideas somehow
+remove unused stuff from package.json etc
+i could use bootstrap contextual classes as a "priority of this idea" or
+whatever
+
+are reactive tables a good idea? how do they look on mobile?
+
+change "long" to "full"
+
+reverse order of ideas (first ones should be on top)
+
+width of the boxes should be minimum or stretch to the nearest input
+
+get edit working
+
+any way to get restufl "routes" with {id} type stuff in routes?
+
+figure out why delete buttons aren't working
