@@ -18,13 +18,67 @@ html
     link(href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    div(class="container")
-      div(class="nav")
-        if user
-          form(class="form form-inline", action="/logout", method="get")
-            div(class="form-group")
-              button(class="btn btn-default").
-                Log Out
+    nav.navbar-default(role="navigation")
+    
+      // Brand and toggle get grouped for better mobile display
+      .navbar-header
+        button(type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="#") Brand
+    
+      // Collect the nav links, forms, and other content for toggling
+      .collapse.navbar-collapse.navbar-ex1-collapse
+        ul.nav.navbar-nav
+          li.active
+            a(href="#") Link
+          li
+            a(href="#") Link
+          li.dropdown
+            a.dropdown-toggle(href="#" data-toggle="dropdown") Dropdown 
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href="#") Action
+              li
+                a(href="#") Another action
+              li
+                a(href="#") Something else here
+              li
+                a(href="#") Separated link
+              li
+                a(href="#") One more separated link
+        form.navbar-form.navbar-left(role="search")
+          .form-group
+            input.form-control(type="text" placeholder="Search")
+          button.btn.btn-default Submit
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href="#") Link
+          li.dropdown
+            a.dropdown-toggle(href="#" data-toggle="dropdown") Dropdown 
+              b.caret
+              ul.dropdown-menu
+                li
+                  a(href="#") Action
+                li
+                  a(href="#") Another action
+                li
+                  a(href="#") Something else here
+                li
+                  a(href="#") Separated link
+                li
+                  a(href="#") One more separated link  
+
+    //-div(class="container")
+    //-  div(class="nav")
+    //-    if user
+    //-      form(class="form form-inline", action="/logout", method="get")
+    //-        div(class="form-group")
+    //-          button(class="btn btn-default").
+    //-            Log Out
 
 
       block content
