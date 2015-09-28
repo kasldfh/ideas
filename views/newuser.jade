@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  div(class="container-fluid")
+    div(class="row")
+      div(class="col-lg-6")
+        h1 Login 
+        p.lead You know what to do.
+        br
+        form(role='form', action="/login",method="post", style='max-width: 300px;')
+          .form-group
+              input.form-control(type='text', name="username", placeholder='Enter Username')
+          .form-group
+            input.form-control(type='password', name="password", placeholder='Password')
+          button.btn.btn-default(type='submit') Submit
+          &nbsp;
+          a(href='/')
+            button.btn.btn-primary(type="button") Cancel
+
+      div(class="col-lg-6")
+        h1 Register 
+        p.lead Welcome to the amazing ideas repository!
+        br
+        form(role='form', action="/register",method="post", style='max-width: 300px;')
+          .form-group
+              input.form-control(type='text', name="username", placeholder='Enter Username')
+          .form-group
+            input.form-control(type='password', name="password", placeholder='Password')
+          button.btn.btn-default(type='submit') Submit
+            &nbsp;
+          a(href='/')
+            button.btn.btn-primary(type="button") Cancel
+

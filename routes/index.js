@@ -28,6 +28,10 @@ router.get('/login', function(req, res) {
         res.render('login', { user : req.user });
         });
 
+router.get('/newuser', function(req, res) {
+        res.render('newuser', { user : req.user });
+        });
+
 router.post('/login', passport.authenticate('local'), function(req, res) {
         res.redirect('/');
         });
@@ -90,7 +94,7 @@ router.post('/deleteidea', function(req, res) {
 /*GET thoughts page */
 router.get('/', function(req, res) {
         if(!req.user) {
-            res.redirect('/login');
+            res.redirect('/newuser');
         }
         var db = req.db;
         var collection = db.get('ideas');
