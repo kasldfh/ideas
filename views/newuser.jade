@@ -1,4 +1,9 @@
 extends layout
+block scripts
+  script.
+    window.onload = function() {
+      document.getElementById("login_username").focus();
+    };
 
 block content
   div(class="container-fluid")
@@ -7,12 +12,18 @@ block content
         h1 Login 
         p.lead You know what to do.
         br
-        form(role='form', action="/login",method="post", style='max-width: 300px;')
+        form(role='form', action="/login",method="post",
+            style='max-width: 300px;')
           .form-group
-              input.form-control(type='text', name="username", placeholder='Enter Username')
+            label(for="login_username")  Username
+            input.form-control(type='text', name="username", 
+                placeholder='Username', id="login_username")
+
           .form-group
-            input.form-control(type='password', name="password", placeholder='Password')
-          button.btn.btn-default(type='submit') Submit
+            label(for="login_password")  Password
+            input.form-control(type='password', name="password", 
+              placeholder='Password')
+          button.btn.btn-default(type='submit') Log In
           &nbsp;
           a(href='/')
             button.btn.btn-primary(type="button") Cancel
@@ -21,13 +32,23 @@ block content
         h1 Register 
         p.lead Welcome to the amazing ideas repository!
         br
-        form(role='form', action="/register",method="post", style='max-width: 300px;')
+        form(role='form', action="/register",method="post", 
+          style='max-width: 300px;')
           .form-group
-              input.form-control(type='text', name="username", placeholder='Enter Username')
+            label(for="registration_username")  Username
+            input.form-control(type='text', name="username", 
+              placeholder='Username', id="registration_username")
           .form-group
-            input.form-control(type='password', name="password", placeholder='Password')
-          button.btn.btn-default(type='submit') Submit
-            &nbsp;
+            label(for="registration_password")  Password
+            input.form-control(type='password', name="password", 
+              placeholder='Password', id="registration_password")
+
+          .form-group
+            label(for="registration_email")  Email (optional)
+            input.form-control(type='text', name="email", 
+              placeholder='Email', id="registration_email")
+          button.btn.btn-default(type='submit') Register
+          &nbsp;
           a(href='/')
             button.btn.btn-primary(type="button") Cancel
 
