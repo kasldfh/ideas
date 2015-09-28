@@ -6,14 +6,22 @@ block scripts
     };
 
 block content
-  div(class="container-fluid")
+
+  div(class="container-fluid", style="text-align: center;")
+    h1 What is this? 
+    p(class="lead").
+      Do you ever have an amazing idea, only to forget it a minute later?  If
+      you're anything like me, you'd be rich off all those forgotten million
+      dollar ideas! Well, say <b>no more to forgotten ideas! </b> Whenever you
+      have an idea, write it down here, so it isn't lost forever! 
+          
     div(class="row")
       div(class="col-lg-6")
         h1 Login 
         p.lead You know what to do.
         br
         form(role='form', action="/login",method="post",
-            style='max-width: 300px;')
+            style='max-width: 300px; display: inline-block;')
           .form-group
             label(for="login_username")  Username
             input.form-control(type='text', name="username", 
@@ -33,7 +41,7 @@ block content
         p.lead Welcome to the amazing ideas repository!
         br
         form(role='form', action="/register",method="post", 
-          style='max-width: 300px;')
+          style='max-width: 300px; display: inline-block;')
           .form-group
             label(for="registration_username")  Username
             input.form-control(type='text', name="username", 
