@@ -25,13 +25,19 @@ block content
     ul(style="list-style-type: none; padding-left: 0;")
       each idea, i in ideas.reverse()
         li(style="margin-bottom: 20px;")
-          h4(style="text-align: center;"). 
-            !{idea.text}
-          div(class="row")
-            form(class="form form-inline", action="/deleteidea", method="post")
+          div(class="row", style="display: inline-block; width: 55%;")
+            h4(style="text-align: center;"). 
+             !{idea.text}
+            form(class="form ", action="/deleteidea", method="post", 
+                style="margin-bottom: 0; margin-top: 0;")
               input(type="hidden", name="id", value=idea._id)
               div(class="form-group")
-                button(class="btn btn-danger btn-xs", style="align: left;"). 
+                button(class="btn btn-default btn-xs pull-left"). 
                   Delete
+            form(class="form ", action="/deleteidea", method="post", 
+                style="margin-bottom: 0;")
+              input(type="hidden", name="id", value=idea._id)
+              div(class="form-group")
+                button(class="btn btn-default btn-xs pull-left" style="margin-left: 10px;"). 
+                  Edit
           hr(style="border-color: white; width: 55%; align: left;")
-
