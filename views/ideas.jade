@@ -1,73 +1,31 @@
-//- an idea is to have a short text field then a button to extend for longer
-//- text
-    //-form(name="idea-entry",method="post",class="form-inline",action="/addidea",
-    //-    style="margin-bottom: 0px;")
-    //-  table(class="table table-condensed", style="margin-bottom: 0px;")
-    //-    thead
-    //-      tr
-    //-        th
-    //-          !{"Short"}
-    //-        th
-    //-          !{"Full"}
-    //-        th
-    //-        th
-    //-    tbody
-    //-        tr
-    //-          td
-    //-            div(class="form-group") 
-    //-              input(type="text", class="form-control", name="short",
-    //-                  placeholder="Short", size=10)
-    //-          td
-    //-            div(class="form-group")
-    //-                input(type="text", class="form-control", name="long",
-    //-                    placeholder="Long", size=50)
-    //-          td
-    //-            div(class="form-group") 
-    //-              button(type="submit", class="btn btn-default").
-    //-                Save
-
-
-    //-table(class="table table-condensed", style="margin-top: 0px;")
-    //-  tbody
-    //-    each idea, i in ideas
-    //-      tr
-    //-        td
-    //-          h4
-    //-            !{idea.short}
-    //-        td
-    //-          !{idea.long}
-    //-        td
-    //-          form(method="post", class="form", action="/deleteidea")
-    //-            input(type="hidden", name="id", value=idea._id)
-    //-            button(type="submit", class="btn btn-danger").
-    //-              Delete
-    //-        td
-    //-          a(href="/editidea/"+idea.id, class="btn btn-primary").
-    //-            Edit
-
-      
-        //-li= idea.short
-
 extends layout 
 block content
   - console.log(user)
-  div(class="container")
-    h1(class="text-center"). 
-      #{user.username}'s Ideas
-    div(style="text-align: center;")
-      form(name="idea-entry",method="post",class="form-inline",
-          action="/addidea", style="text-align: center;")
+  h1(class="text-center", style="margin-bottom: 15px;"). 
+    !{user.username.toUpperCase()}'S IDEAS
+  div(style="text-align: center;")
+    form(name="idea-entry",method="post",class="form-inline",
+        action="/addidea", style="text-align: center;")
 
-        div(class="form-group col-md-3") 
-          span(style="display: block;") 
-            input(type="text", class="form-control", name="short",
-                placeholder="Short", style="width: 100%;")
+      div(class="form-group ") 
+        span(style="display: block;") 
+          input(type="text", class="form-control", name="text",
+              placeholder="Idea", style="width: 100%;", size="80")
 
-        div(class="form-group col-md-4")
-          span(style="display: block;")
-             input(type="text", class="form-control", name="long",
-                 placeholder="Long", style="width: 100%")
+      div(class="form-group")
+       button(type="submit", class="btn btn-default").
+         Save
+    br
+    ul(style="list-style-type: none; padding-left: 0;")
+      each idea, i in ideas.reverse()
+        li(style="margin-bottom: 20px;")
+          h4(style="text-align: center;"). 
+            !{idea.text}
+          div(class="row")
+            form(class="form form-inline", action="/deleteidea", method="post")
+              input(type="hidden", name="id", value=idea._id)
+              div(class="form-group")
+                button(class="btn btn-danger btn-xs", style="align: left;"). 
+                  Delete
+          hr(style="border-color: white; width: 55%; align: left;")
 
-         div(class="form-group col-md-1") 
-           button(type="submit", class="btn btn-default").
-             Save

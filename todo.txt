@@ -19,3 +19,8 @@ get edit working
 any way to get restufl "routes" with {id} type stuff in routes?
 
 figure out why delete buttons aren't working
+
+why arent' the hr's and the form lined up right?
+
+look into having timestamps, sort by most recently created or edited...shouldnt
+be hard 

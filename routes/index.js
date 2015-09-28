@@ -49,11 +49,9 @@ router.post('/addidea', function(req, res) {
         var db = req.db;
 
         // Get our form values. These rely on the "name" attributes
-        var short = req.body.short;
-        var long = req.body.long;
+        var text = req.body.text;
         var username = req.user.username;
         console.log(req.user.username);
-        console.log(short);
 
         // Set our collection
         var collection = db.get('ideas');
@@ -61,8 +59,7 @@ router.post('/addidea', function(req, res) {
         // Submit to the DB
         collection.insert({
                 "username" : username,
-                "short" : short,
-                "long" : long
+                "text" : text
                 }, function (err, doc) {
                 if (err) {
                 // If it failed, return error
