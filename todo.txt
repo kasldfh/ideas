@@ -8,6 +8,15 @@ get edit working
 look into having timestamps, sort by most recently created or edited...shouldnt
 be hard 
 
-add user email to registration form... hk h
+add user email 
 
 as the user types number of rows in input shoudl increase
+
+
+each user should be able to have multiple "repositories". like one for academic
+thoughts, one for social thoughts, one for questions about life, etc. Maybe
+allow users to put their most used repositories in the navbar for easy access,
+as well as set their default repository. 
+
+
+index mongodb on username, and maybe repository if each user can have multiple
