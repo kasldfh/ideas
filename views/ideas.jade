@@ -1,4 +1,10 @@
 extends layout 
+block scripts
+  script.
+    window.onload = function() {
+      document.getElementById("idea").focus();
+    };
+
 block content
   - console.log(user)
   h1(class="text-center", style="margin-bottom: 15px;"). 
@@ -10,7 +16,7 @@ block content
       div(class="form-group ") 
         span(style="display: block;") 
           input(type="text", class="form-control", name="text",
-              placeholder="Idea", style="width: 100%;", size="80")
+              placeholder="Idea", style="width: 100%;", size="80", id="idea")
 
       div(class="form-group")
        button(type="submit", class="btn btn-default").
