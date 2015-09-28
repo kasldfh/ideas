@@ -3,9 +3,9 @@ var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
 
-router.get('/', function (req, res) {
-        res.render('index', { user : req.user });
-        });
+//router.get('/', function (req, res) {
+//        res.render('index', { user : req.user });
+//        });
 
 router.get('/register', function(req, res) {
         res.render('register', { });
@@ -29,7 +29,7 @@ router.get('/login', function(req, res) {
         });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-        res.redirect('/ideas');
+        res.redirect('/');
         });
 
 router.get('/logout', function(req, res) {
@@ -67,7 +67,7 @@ router.post('/addidea', function(req, res) {
                 }
                 else {
                 // And forward to success page
-                res.redirect("/ideas");
+                res.redirect("/");
                 }
                 });
 });
@@ -82,13 +82,16 @@ router.post('/deleteidea', function(req, res) {
     collection.remove({"_id": id }, function (err, docs) {
         if(err) return err;
         }); 
-    res.redirect("/ideas");
+    res.redirect("/");
 });
 
 
 //TODO: if someone isn't logged in, redirect to login or home page
 /*GET thoughts page */
-router.get('/ideas', function(req, res) {
+router.get('/', function(req, res) {
+        if(!req.user) {
+            res.redirect('/login');
+        }
         var db = req.db;
         var collection = db.get('ideas');
         collection.find({username : req.user.username},{},function(e,docs){

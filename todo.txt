@@ -24,3 +24,7 @@ why arent' the hr's and the form lined up right?
 
 look into having timestamps, sort by most recently created or edited...shouldnt
 be hard 
+
+fix the logout button location
+
+add user email to registration form... hk h
