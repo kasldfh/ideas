@@ -1,22 +1,21 @@
-make it receive sms ideas somehow
+make the space between thoughts and buttons less
+
 remove unused stuff from package.json etc
 
-width of the boxes should be minimum or stretch to the nearest input
-
 get edit working
+
+as the user types number of rows in input shoudl increase
+
+add user email, password reset, maybe sms, profile page or something needed 
 
 look into having timestamps, sort by most recently created or edited...shouldnt
 be hard 
 
-add user email 
-
-as the user types number of rows in input shoudl increase
-
+index mongodb on username, and maybe repository if each user can have multiple
 
 each user should be able to have multiple "repositories". like one for academic
 thoughts, one for social thoughts, one for questions about life, etc. Maybe
 allow users to put their most used repositories in the navbar for easy access,
 as well as set their default repository. 
 
-
-index mongodb on username, and maybe repository if each user can have multiple
+make it receive sms ideas somehow
