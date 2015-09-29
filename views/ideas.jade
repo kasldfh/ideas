@@ -26,12 +26,11 @@ block content
       each idea, i in ideas.reverse()
         li(style="margin-bottom: 20px;")
           div(class="row", style="display: inline-block; width: 55%;")
-            h4(style="text-align: center;"). 
+            h4(style="text-align: center; margin-bottom: 0px;"). 
              !{idea.text}
-            form(class="form ", action="/deleteidea", method="post", 
-                style="margin-bottom: 0; margin-top: 0;")
+            form(class="form ", action="/deleteidea", method="post") 
               input(type="hidden", name="id", value=idea._id)
-              div(class="form-group")
+              div(class="form-group", style="margin-bottom: 0px;")
                 button(class="btn btn-default btn-xs pull-left"). 
                   Delete
             //- form(class="form ", action="/deleteidea", method="post", 
