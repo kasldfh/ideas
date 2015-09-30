@@ -26,7 +26,8 @@ block content
       each idea, i in ideas.reverse()
         li(style="margin-bottom: 20px;")
           div(class="row", style="display: inline-block; width: 55%;")
-            h4(style="text-align: center; margin-bottom: 0px;"). 
+            h4(style="text-align: center; margin-bottom: 0px;",
+contenteditable="true", class="editable"). 
              !{idea.text}
             form(class="form ", action="/deleteidea", method="post") 
               input(type="hidden", name="id", value=idea._id)
