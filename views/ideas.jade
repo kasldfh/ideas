@@ -3,6 +3,11 @@ block scripts
   script.
     window.onload = function() {
       document.getElementById("idea").focus();
+      $('.editable').bind("input", (function(event) {
+          var id = $(this).attr('id');
+          saveEdit(id);
+          console.log($(this).attr('id'));
+          })); 
     };
     function saveEdit(id) {
       console.log("updating" + id);
@@ -47,12 +52,7 @@ block content
               div(class="form-group", style="margin-bottom: 0px;")
                 button(class="btn btn-default btn-xs pull-left"). 
                   Delete
-            input(type="button", value="Save", onclick="saveEdit('" + idea._id + "')",
-                class="btn btn-default btn-xs pull-left" id=idea._id + "_button")
-            //- form(class="form ", action="/deleteidea", method="post", 
-            //-     style="margin-bottom: 0;")
-            //-   input(type="hidden", name="id", value=idea._id)
-            //-   div(class="form-group")
-            //-     button(class="btn btn-default btn-xs pull-left" style="margin-left: 10px;"). 
-            //-       Edit
+            //- The form updates automatically on each button press
+            //-input(type="button", value="Save", onclick="saveEdit('" + idea._id + "')",
+            //-    class="btn btn-default btn-xs pull-left" id=idea._id + "_button")
           hr(style="border-color: white; width: 55%; align: left;")
