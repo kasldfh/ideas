@@ -41,11 +41,6 @@ router.get('/logout', function(req, res) {
         res.redirect('/');
         });
 
-router.get('/ping', function(req, res){
-        res.status(200).send("pong!");
-        });
-
-
 /* POST to Add Idea */
 router.post('/addidea', function(req, res) {
 
