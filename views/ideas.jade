@@ -3,12 +3,17 @@ block scripts
   script.
     window.onload = function() {
       document.getElementById("idea").focus();
-      $('.editable').bind("input", (function(event) {
+      $('.edit').bind("input", (function(event) {
           var id = $(this).attr('id');
           saveEdit(id);
           console.log($(this).attr('id'));
           })); 
     };
+    $('#new').bind("input", function(event) {
+        var text = $('#new').text();
+        console.log("new thought: " + text);
+        saveThought(text);
+
     function saveEdit(id) {
       console.log("updating" + id);
       var text = $("#" + id).text();
@@ -41,11 +46,17 @@ block content
          Save
     br
     ul(style="list-style-type: none; padding-left: 0;")
+      li(style="margin-bottom: 20px;")
+          div(class="row", style="display: inline-block; width: 55%;")
+            h4(style="text-align: center; margin-bottom: 0px;",
+              contenteditable="true", class="edit", id="new"). 
+              Enter your thought by clicking here. 
+          hr(style="border-color: white; width: 55%; align: left;")
       each idea, i in ideas.reverse()
         li(style="margin-bottom: 20px;")
           div(class="row", style="display: inline-block; width: 55%;")
             h4(style="text-align: center; margin-bottom: 0px;",
-              contenteditable="true", class="editable", id=idea._id). 
+              contenteditable="true", class="edit editable", id=idea._id). 
              !{idea.text}
             form(class="form", action="/deleteidea", method="post") 
               input(type="hidden", name="id", value=idea._id)
