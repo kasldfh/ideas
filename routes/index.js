@@ -76,6 +76,26 @@ router.post('/addidea', function(req, res) {
                 });
 });
 
+router.post('/updateidea', function(req, res) {
+    var db = req.db;
+    var text = req.body.text;
+    var id = req.body.id.toString();
+    var collection = db.get('ideas');
+    console.log("setting collection");  
+    var collection = db.get('ideas');
+    collection.update({"_id" : id}, {$set: {"text":text}},
+        function(err, doc) {
+            if(err) {
+                console.log(err);
+                res.send("There was a problem updating the record");
+            }
+            else {
+                res.redirect('/');
+            }
+
+        });
+    }); 
+
 /* GET to remove idea*/
 router.post('/deleteidea', function(req, res) {
     var db = req.db;

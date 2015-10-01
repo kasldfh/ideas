@@ -4,6 +4,19 @@ block scripts
     window.onload = function() {
       document.getElementById("idea").focus();
     };
+    function saveEdit(id) {
+      console.log("updating" + id);
+      var text = $("#" + id).text();
+      console.log("text: " + text);
+      $.post("/updateidea",
+          {
+            id: id,
+            text: text
+          }
+          ,function(data, textStatus) {
+            $('#' + id + '_button').blur();
+            });
+    }
 
 block content
   - console.log(user)
@@ -27,13 +40,15 @@ block content
         li(style="margin-bottom: 20px;")
           div(class="row", style="display: inline-block; width: 55%;")
             h4(style="text-align: center; margin-bottom: 0px;",
-contenteditable="true", class="editable"). 
+              contenteditable="true", class="editable", id=idea._id). 
              !{idea.text}
-            form(class="form ", action="/deleteidea", method="post") 
+            form(class="form", action="/deleteidea", method="post") 
               input(type="hidden", name="id", value=idea._id)
               div(class="form-group", style="margin-bottom: 0px;")
                 button(class="btn btn-default btn-xs pull-left"). 
                   Delete
+            input(type="button", value="Save", onclick="saveEdit('" + idea._id + "')",
+                class="btn btn-default btn-xs pull-left" id=idea._id + "_button")
             //- form(class="form ", action="/deleteidea", method="post", 
             //-     style="margin-bottom: 0;")
             //-   input(type="hidden", name="id", value=idea._id)
