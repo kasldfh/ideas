@@ -66,7 +66,7 @@ router.post('/addidea', function(req, res) {
                 }
                 else {
                 // And forward to success page
-                res.redirect("/");
+                res.send(doc);
                 }
                 });
 });

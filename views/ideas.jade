@@ -1,31 +1,122 @@
 extends layout 
+//- I think the problem rn is that i dont have a way to store the previous
+//- idea's id...not 100% sure -- need post method as well that returns just id
 block scripts
   script.
-    window.onload = function() {
-      document.getElementById("idea").focus();
+    window.onload = setDefaults;
+
+    function setDefaults() {
+      //-get global username
+      var user = $('#user_name').val();
+      //-set focus to new thought by default
+      document.getElementById("new").focus();
+
+      //- when a listed thought is edited save the edit
       $('.edit').bind("input", (function(event) {
-          var id = $(this).attr('id');
-          saveEdit(id);
-          console.log($(this).attr('id'));
-          })); 
+        var id = $(this).attr('id');
+        saveEdit(id);
+      })); 
+
+      //- handle new thoughts
+      $('#new').bind("input", function(event) {
+          var text = $('#new').text();
+          if(!$('#new').attr("idea_id")) {
+            new_id = saveIdea(user.username);
+            }
+          else if($('#new').attr("idea_id")){
+            saveEdit("new");
+            }
+            });
     };
-    $('#new').bind("input", function(event) {
-        var text = $('#new').text();
-        console.log("new thought: " + text);
-        saveThought(text);
+
+
+    function saveIdea(user) {
+      console.log("saving");
+      var text = $("#new").text();
+      console.log("text: " + text);
+      $.post("/addidea",
+          {
+            "username": user,
+            "text": text
+          }
+          ,function(data, textStatus) {
+            new_id = data._id;
+            $('#' + new_id + '_button').blur();
+            $('#new').addClass("has_id");
+            $('#new').attr("idea_id", new_id);
+            console.log("set new to have has_id with id: " + new_id);
+            });
+    }
 
     function saveEdit(id) {
-      console.log("updating" + id);
       var text = $("#" + id).text();
-      console.log("text: " + text);
+      if(id == "new") {
+        id = $('#new').attr("idea_id");
+      }
+      console.log("updating" + id);
       $.post("/updateidea",
           {
             id: id,
             text: text
-          }
-          ,function(data, textStatus) {
+          },
+          function(data, textStatus) {
             $('#' + id + '_button').blur();
+              var_id = data;
             });
+    }
+
+    function clear_idea() {
+      var id = $("#new").attr("idea_id");
+      if(!(id == "")) {
+        delete_idea(id);
+        $("#new").attr("idea_id", "");
+      }
+      $("#new").text("");
+
+      $('#clear_new').blur();
+
+      }
+    
+    function delete_idea(id) {
+      $.post("/deleteidea",
+        {
+          id: id
+        });
+
+      $('#' + id + '_listing').remove();
+    }
+
+
+    /* does the following
+       clear new's text
+       clear idea_id from new
+       add idea to list of ideas
+       set focus back to new
+     */
+    function new_idea() {
+      //add idea to list of ideas
+      //dirty hack, find a cleaner way
+      var id = $("#new").attr("idea_id");
+      $("#ideas li:eq(0)").after('<li style="margin-bottom: 20px;">\
+          <div class="row" style="display: inline-block; width: 55%;">\
+            <h4 style="text-align: center; margin-bottom: 0px;"\
+              contenteditable="true" class="edit editable" \
+              id=' + id + '>' + $("#new").text() + '</h4> \
+              <form class="form" action="/deleteidea" method="post"> \
+              <input type="hidden" name="id" value="' + id + '">\
+              <div class="form-group" style="margin-bottom: 0px;">\
+                <button class="btn btn-default btn-xs pull-left"> \
+                  Delete\
+                </button>\
+              </div>\
+              </form>\
+              </div>\
+          <hr style="border-color: white; width: 55%; align: left;">');
+            
+      //clear new
+      $("#new").text("");
+      $("#new").attr("idea_id", "");
+      setDefaults();
     }
 
 block content
@@ -33,27 +124,26 @@ block content
   h1(class="text-center", style="margin-bottom: 15px;"). 
     !{user.username.toUpperCase()}'S IDEAS
   div(style="text-align: center;")
-    form(name="idea-entry",method="post",class="form-inline",
-        action="/addidea", style="text-align: center;")
-
-      div(class="form-group ") 
-        span(style="display: block;") 
-          input(type="text", class="form-control", name="text",
-              placeholder="Idea", style="width: 100%;", size="80", id="idea")
-
-      div(class="form-group")
-       button(type="submit", class="btn btn-default").
-         Save
-    br
-    ul(style="list-style-type: none; padding-left: 0;")
+    ul(style="list-style-type: none; padding-left: 0;", id="ideas")
       li(style="margin-bottom: 20px;")
           div(class="row", style="display: inline-block; width: 55%;")
-            h4(style="text-align: center; margin-bottom: 0px;",
-              contenteditable="true", class="edit", id="new"). 
-              Enter your thought by clicking here. 
+            h2(style="text-align: center; \
+                margin-bottom: 0px; background-color: rgba(255, 255, 255, .4);",
+              contenteditable="true", class="editable img-rounded", id="new"). 
+            div(class="form-group", style="margin-top: 5px;")
+              //- clear input and put new idea in list
+              button(class="btn btn-success btn-xs pull-left", 
+                  onclick="new_idea()"). 
+                New
+              //- clear input (discard from db as well)
+              button(class="btn btn-default btn-xs pull-left",
+                  style="margin-left: 5px;", onclick="clear_idea()", 
+                  id="clear_new"). 
+                Clear
+              
           hr(style="border-color: white; width: 55%; align: left;")
       each idea, i in ideas.reverse()
-        li(style="margin-bottom: 20px;")
+        li(style="margin-bottom: 20px;", id=idea._id + "_listing")
           div(class="row", style="display: inline-block; width: 55%;")
             h4(style="text-align: center; margin-bottom: 0px;",
               contenteditable="true", class="edit editable", id=idea._id). 
