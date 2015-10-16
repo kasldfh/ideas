@@ -11,6 +11,11 @@ block scripts
       //-set focus to new thought by default
       document.getElementById("new").focus();
 
+      //- dont wat items to already be bound to a handler
+      $('.edit').unbind("input");
+      $('#new').unbind("input");
+      $('#new').off('keypress');
+
       //- when a listed thought is edited save the edit
       $('.edit').bind("input", (function(event) {
         var id = $(this).attr('id');
@@ -26,7 +31,25 @@ block scripts
           else if($('#new').attr("idea_id")){
             saveEdit("new");
             }
-            });
+        });
+
+        $('#new').on('keypress', function(e) {
+            //console.log('keycode of: ' + e.keyCode + 'detected' + "e.shiftkey: " + e.shiftKey);
+          if(e.keyCode == 13 && e.shiftKey == false) {
+              console.log("should trigger new idea being called (and clear idea)");
+              new_idea();
+              return false;
+            }
+          });
+
+        $('.edit').on('keypress', function(e) {
+          if(e.keyCode == 13 && e.shiftKey == false) {
+              console.log("should trigger focus on new being called (and clear idea)");
+              //new_idea();
+              document.getElementById("new").focus();
+              return false;
+            }
+          });
     };
 
 
